@@ -1,0 +1,67 @@
+﻿@model  OrderFruit.ViewModel.FruitViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Fruits</h2>
+
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Fruit
+        </th>
+        <th>
+            Cost
+        </th>
+        <th>
+            Weight
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Fruits)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost) euro
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Weight) kg
+            </td>
+            <td>
+                @Html.ActionLink("Add to cart", "Add", new { id = item.Id })
+                @*@Html.ActionLink("Details", "Details", new { id=item.Id })*@
+                @*@Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
+            </td>
+        </tr>
+    }
+</table>
+
+<table class="table">
+    <tr>
+        <th>Cart</th>
+    </tr>
+    @foreach (var cart in Model.Cart)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => cart.Name)</td>
+            <td>@Html.DisplayFor(modelItem => cart.Weight)</td>
+            <td>@Html.DisplayFor(modelItem => cart.Cost)</td>
+            <td>@Html.ActionLink("Remove", "Remove", new { fruitId = cart.Id })</td>
+        </tr>
+    }
+    <tr>
+        @Html.ActionLink("Clear cart", "Clear")
+    </tr>
+</table>
+
+<p>
+    @Html.ActionLink("Proceed to Checkout", "Create", "Order", null, null)
+</p>
