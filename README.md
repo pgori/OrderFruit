@@ -7,3 +7,5 @@
   insert into Fruits (Name, Cost, Weight) values ('Apple', 0.5, 0.15)
   insert into Fruits (Name, Cost, Weight) values ('Orange', 0.2, 0.4)
   insert into Fruits (Name, Cost, Weight) values ('Banana', 0.25, 0.35)
+  
+3 - Run the application.
