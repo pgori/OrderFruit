@@ -141,6 +141,7 @@
     </Compile>
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Fruit.cs" />
+    <Compile Include="Models\FruitOrder.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\FruitViewModel.cs" />

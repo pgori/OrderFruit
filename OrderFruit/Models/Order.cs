@@ -9,7 +9,7 @@ namespace OrderFruit.Models
     {
         public int Id { get; set; }
         public Customer Customer { get; set; }
-        public List<Fruit> Fruits { get; set; }
+        public List<FruitOrder> FruitOrder { get; set; }
         public double TotalCost { get; set; }
         public double TotalWeight { get; set; }
     }

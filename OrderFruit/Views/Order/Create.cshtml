@@ -57,7 +57,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            @Html.HiddenFor(model => Model.Order.Fruits)
+            @*@Html.HiddenFor(model => Model.Order.Fruits)*@
             @Html.HiddenFor(model => Model.Order.TotalCost)
             @Html.HiddenFor(model => Model.Order.TotalWeight)
             <input type="submit" value="Pay Now" class="btn btn-default" />
@@ -72,12 +72,12 @@
         <th>Weight</th>
         <th>Cost</th>
     </tr>
-    @foreach (var cart in Model.Order.Fruits)
+    @foreach (var cart in Model.Order.FruitOrder)
     {
         <tr>
-            <td>@Html.DisplayFor(modelItem => cart.Name)</td>
-            <td>@Html.DisplayFor(modelItem => cart.Weight) kg</td>
-            <td>@Html.DisplayFor(modelItem => cart.Cost) euro</td>
+            <td>@Html.DisplayFor(modelItem => cart.Fruit.Name)</td>
+            <td>@Html.DisplayFor(modelItem => cart.Fruit.Weight) kg</td>
+            <td>@Html.DisplayFor(modelItem => cart.Fruit.Cost) euro</td>
         </tr>
     }
     <tr>

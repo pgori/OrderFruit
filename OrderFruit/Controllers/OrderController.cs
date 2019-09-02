@@ -47,7 +47,15 @@ namespace OrderFruit.Controllers
             List<Fruit> fruits = (List<Fruit>)Session["Cart"];
             orderViewModel.Order = new Order();
             orderViewModel.Order.Customer = new Customer();
-            orderViewModel.Order.Fruits = fruits;
+            orderViewModel.Order.FruitOrder = new List<FruitOrder>();
+            foreach (Fruit fruit in fruits)
+            {
+                FruitOrder fo = new FruitOrder();
+                fo.Fruit = fruit;
+                fo.Order = orderViewModel.Order;
+                orderViewModel.Order.FruitOrder.Add(fo);
+            }
+            //orderViewModel.Order.FruitOrder = fruits;
             orderViewModel.Order.TotalCost = GetTotalCost(fruits);
             orderViewModel.Order.TotalWeight = GetTotalWeight(fruits);
             return View(orderViewModel);
@@ -84,7 +92,7 @@ namespace OrderFruit.Controllers
             {
                 Order order = new Order();
                 order.Customer = orderViewModel.Order.Customer;
-                order.Fruits = orderViewModel.Order.Fruits;
+                //order.Fruits = orderViewModel.Order.Fruits;
                 order.TotalCost = orderViewModel.Order.TotalCost;
                 order.TotalWeight = orderViewModel.Order.TotalWeight;
 
@@ -101,11 +109,13 @@ namespace OrderFruit.Controllers
         public ActionResult CreateOrder(OrderViewModel orderViewModel)
         {
             List<Fruit> fruits = (List<Fruit>)Session["Cart"];
+            //orderViewModel.Order.Fruits = fruits;
             if (ModelState.IsValid)
             {
                 Order order = new Order();
                 order.Customer = orderViewModel.Order.Customer;
-                order.Fruits = fruits;
+                order.FruitOrder = orderViewModel.Order.FruitOrder;
+                //order.Fruits = fruits;
                 order.TotalCost = orderViewModel.Order.TotalCost;
                 order.TotalWeight = orderViewModel.Order.TotalWeight;
 
@@ -114,7 +124,8 @@ namespace OrderFruit.Controllers
                 //return RedirectToAction("Index");
             }
             fruits = new List<Fruit>();
-            return View("~/Views/Fruit/Index.cshtml", new FruitViewModel() { Fruits = db.Fruit.ToList(), Cart = fruits });
+            Session["Cart"] = fruits;
+            return RedirectToAction("Index", "Fruit", new FruitViewModel() { Fruits = db.Fruit.ToList(), Cart = fruits });
         }
 
         // GET: Order/Edit/5

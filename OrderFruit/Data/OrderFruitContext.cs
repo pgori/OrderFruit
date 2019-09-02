@@ -12,5 +12,13 @@ namespace OrderFruit.Data
         public DbSet<Order> Order { get; set; }
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Fruit> Fruit { get; set; }
+        public DbSet<FruitOrder> FruitOrder { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Order>().HasMany(o => o.FruitOrder).WithRequired(fo => fo.Order);
+        }
     }
 }
