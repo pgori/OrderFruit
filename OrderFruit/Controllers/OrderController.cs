@@ -113,8 +113,16 @@ namespace OrderFruit.Controllers
             if (ModelState.IsValid)
             {
                 Order order = new Order();
+                order.FruitOrder = new List<FruitOrder>();
                 order.Customer = orderViewModel.Order.Customer;
-                order.FruitOrder = orderViewModel.Order.FruitOrder;
+                foreach (Fruit fruit in fruits)
+                {
+                    FruitOrder fo = new FruitOrder();
+                    fo.Fruit = db.Fruit.FirstOrDefault(f => f.Name == fruit.Name);
+                    fo.Order = null;
+                    order.FruitOrder.Add(fo);
+                }
+                //order.FruitOrder = orderViewModel.Order.FruitOrder;
                 //order.Fruits = fruits;
                 order.TotalCost = orderViewModel.Order.TotalCost;
                 order.TotalWeight = orderViewModel.Order.TotalWeight;
