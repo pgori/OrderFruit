@@ -1,27 +1,69 @@
-﻿@model IEnumerable<OrderFruit.Models.Order>
+﻿@model  OrderFruit.Models.Order
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @using (Html.BeginForm("Details", "Order", FormMethod.Get, new { id = Model }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-horizontal">
+            <div class="form-group">
+                Order Number
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Search" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+
+    }
 </p>
-<table class="table">
-    <tr>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+@if (Model != null)
+{
+    <table class="table">
+        @*<tr>
+            <th>Customer</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Country</th>
+        </tr>*@
+
+        <tr>
+            <td>@Html.DisplayFor(model => model.Customer.Name)</td>
+        <tr>
+        <tr>
+            <td>@Html.DisplayFor(model => model.Customer.Address)</td>
+        <tr>
+        <tr>
+            <td>@Html.DisplayFor(model => model.Customer.City)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayFor(model => model.Customer.Country)</td>
+        </tr>
+
+        @foreach (var item in Model.FruitOrder)
+        {
+        <tr>
+            <td>@Html.DisplayFor(model => item.Fruit.Name)</td>
+            <td>@Html.DisplayFor(model => item.Fruit.Cost)</td>
+            <td>@Html.DisplayFor(model => item.Fruit.Weight)</td>
+        </tr>
+        }
+
+        <tr>
+            <td></td>
+            <td>@Html.DisplayFor(model => model.TotalCost)</td>
+            <td>@Html.DisplayFor(model => model.TotalWeight)</td>
+        </tr>
+
+    </table>
 }
-
-</table>

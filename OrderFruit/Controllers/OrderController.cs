@@ -22,22 +22,26 @@ namespace OrderFruit.Controllers
             if(Session["Cart"] == null)
                 Session["Cart"] = new List<Fruit>();
             
-            return View(db.Order.ToList());
+            return View();
         }
 
         // GET: Order/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(Order orderModel)
         {
-            if (id == null)
+            if (orderModel == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Order.Find(id);
+            Order order = db.Order
+                .Include(o => o.Customer)
+                .Include(o => o.FruitOrder.Select(fo => fo.Fruit))
+                .Where(o => o.Id == orderModel.Id)
+                .FirstOrDefault();
             if (order == null)
             {
                 return HttpNotFound();
             }
-            return View(order);
+            return View("Index", order);
         }
 
         // GET: Order/Create
