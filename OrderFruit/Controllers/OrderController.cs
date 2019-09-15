@@ -34,7 +34,7 @@ namespace OrderFruit.Controllers
             }
             Order order = db.Order
                 .Include(o => o.Customer)
-                .Include(o => o.FruitOrder.Select(fo => fo.Fruit))
+                .Include(o => o.FruitOrder.Select(f => f.Fruit))
                 .Where(o => o.Id == orderModel.Id)
                 .FirstOrDefault();
             if (order == null)
@@ -59,7 +59,6 @@ namespace OrderFruit.Controllers
                 fo.Order = orderViewModel.Order;
                 orderViewModel.Order.FruitOrder.Add(fo);
             }
-            //orderViewModel.Order.FruitOrder = fruits;
             orderViewModel.Order.TotalCost = GetTotalCost(fruits);
             orderViewModel.Order.TotalWeight = GetTotalWeight(fruits);
             return View(orderViewModel);
@@ -85,35 +84,11 @@ namespace OrderFruit.Controllers
             return total;
         }
 
-        // POST: Order/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id")] OrderViewModel orderViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                Order order = new Order();
-                order.Customer = orderViewModel.Order.Customer;
-                //order.Fruits = orderViewModel.Order.Fruits;
-                order.TotalCost = orderViewModel.Order.TotalCost;
-                order.TotalWeight = orderViewModel.Order.TotalWeight;
-
-                db.Order.Add(order);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(orderViewModel);
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateOrder(OrderViewModel orderViewModel)
         {
             List<Fruit> fruits = (List<Fruit>)Session["Cart"];
-            //orderViewModel.Order.Fruits = fruits;
             if (ModelState.IsValid)
             {
                 Order order = new Order();
@@ -126,75 +101,15 @@ namespace OrderFruit.Controllers
                     fo.Order = null;
                     order.FruitOrder.Add(fo);
                 }
-                //order.FruitOrder = orderViewModel.Order.FruitOrder;
-                //order.Fruits = fruits;
                 order.TotalCost = orderViewModel.Order.TotalCost;
                 order.TotalWeight = orderViewModel.Order.TotalWeight;
 
                 db.Order.Add(order);
                 db.SaveChanges();
-                //return RedirectToAction("Index");
             }
             fruits = new List<Fruit>();
             Session["Cart"] = fruits;
             return RedirectToAction("Index", "Fruit", new FruitViewModel() { Fruits = db.Fruit.ToList(), Cart = fruits });
-        }
-
-        // GET: Order/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Order order = db.Order.Find(id);
-            if (order == null)
-            {
-                return HttpNotFound();
-            }
-            return View(order);
-        }
-
-        // POST: Order/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id")] Order order)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(order).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(order);
-        }
-
-        // GET: Order/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Order order = db.Order.Find(id);
-            if (order == null)
-            {
-                return HttpNotFound();
-            }
-            return View(order);
-        }
-
-        // POST: Order/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Order order = db.Order.Find(id);
-            db.Order.Remove(order);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

@@ -120,14 +120,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config" />
     <Content Include="Views\Order\Create.cshtml" />
-    <Content Include="Views\Order\Delete.cshtml" />
     <Content Include="Views\Order\Details.cshtml" />
-    <Content Include="Views\Order\Edit.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Fruit\Create.cshtml" />
-    <Content Include="Views\Fruit\Delete.cshtml" />
-    <Content Include="Views\Fruit\Details.cshtml" />
-    <Content Include="Views\Fruit\Edit.cshtml" />
     <Content Include="Views\Fruit\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

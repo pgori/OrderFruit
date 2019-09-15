@@ -29,41 +29,40 @@
 
 @if (Model != null)
 {
-    <table class="table">
-        @*<tr>
-            <th>Customer</th>
-            <th>Address</th>
-            <th>City</th>
-            <th>Country</th>
-        </tr>*@
+<table class="table">
 
-        <tr>
-            <td>@Html.DisplayFor(model => model.Customer.Name)</td>
-        <tr>
-        <tr>
-            <td>@Html.DisplayFor(model => model.Customer.Address)</td>
-        <tr>
-        <tr>
-            <td>@Html.DisplayFor(model => model.Customer.City)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayFor(model => model.Customer.Country)</td>
-        </tr>
+    <tr>
+        <td>@Html.DisplayFor(model => model.Customer.Name)</td>
+    <tr>
+    <tr>
+        <td>@Html.DisplayFor(model => model.Customer.Address)</td>
+    <tr>
+    <tr>
+        <td>@Html.DisplayFor(model => model.Customer.City)</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayFor(model => model.Customer.Country)</td>
+    </tr>
 
-        @foreach (var item in Model.FruitOrder)
-        {
+    <tr>
+        <td>Fruit</td>
+        <td>Cost</td>
+        <td>Weight</td>
+    </tr>
+    @foreach (var item in Model.FruitOrder)
+    {
         <tr>
             <td>@Html.DisplayFor(model => item.Fruit.Name)</td>
             <td>@Html.DisplayFor(model => item.Fruit.Cost)</td>
             <td>@Html.DisplayFor(model => item.Fruit.Weight)</td>
         </tr>
-        }
+    }
 
-        <tr>
-            <td></td>
-            <td>@Html.DisplayFor(model => model.TotalCost)</td>
-            <td>@Html.DisplayFor(model => model.TotalWeight)</td>
-        </tr>
+    <tr>
+        <td></td>
+        <td>@Html.DisplayFor(model => model.TotalCost)</td>
+        <td>@Html.DisplayFor(model => model.TotalWeight)</td>
+    </tr>
 
-    </table>
+</table>
 }

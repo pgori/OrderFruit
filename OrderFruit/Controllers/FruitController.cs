@@ -37,17 +37,16 @@ namespace OrderFruit.Controllers
                         fruits.Add(apple);
                     break;
                 case 2:
-                    Fruit orange = new Fruit("Orange", 0.4, 0.2);
+                    Fruit orange = new Fruit("Orange", 0.2, 0.4);
                     if(CheckIfFitsMoreWeight(fruits, orange.Weight))
                         fruits.Add(orange);
                     break;
                 case 3:
-                    Fruit banana = new Fruit("Banana", 0.35, 0.25);
+                    Fruit banana = new Fruit("Banana", 0.25, 0.35);
                     if(CheckIfFitsMoreWeight(fruits, banana.Weight))
                         fruits.Add(banana);
                     break;
             }
-            //return View("~/Views/Fruit/Index.cshtml", db.Fruit.ToList());
             return View("Index", new FruitViewModel(){ Fruits = db.Fruit.ToList(), Cart = fruits});
         }
 
@@ -73,26 +72,6 @@ namespace OrderFruit.Controllers
             return View("Index", new FruitViewModel() { Fruits = db.Fruit.ToList(), Cart = fruits });
         }
 
-        // GET: Fruit/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Fruit fruit = db.Fruit.Find(id);
-            if (fruit == null)
-            {
-                return HttpNotFound();
-            }
-            return View(fruit);
-        }
-
-        // GET: Fruit/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
 
         // POST: Fruit/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -111,62 +90,6 @@ namespace OrderFruit.Controllers
             return View(fruit);
         }
 
-        // GET: Fruit/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Fruit fruit = db.Fruit.Find(id);
-            if (fruit == null)
-            {
-                return HttpNotFound();
-            }
-            return View(fruit);
-        }
-
-        // POST: Fruit/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Cost,Weight")] Fruit fruit)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(fruit).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(fruit);
-        }
-
-        // GET: Fruit/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Fruit fruit = db.Fruit.Find(id);
-            if (fruit == null)
-            {
-                return HttpNotFound();
-            }
-            return View(fruit);
-        }
-
-        // POST: Fruit/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Fruit fruit = db.Fruit.Find(id);
-            db.Fruit.Remove(fruit);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
 
         protected override void Dispose(bool disposing)
         {
